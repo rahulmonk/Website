@@ -15,6 +15,9 @@ ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
 # --- HELPER FUNCTIONS ---
 
 def get_all_content(content_type):
+    """
+    Loads all markdown files from a specific content directory (e.g., 'posts' or 'projects').
+    """
     all_items = []
     source_dir = os.path.join(CONTENT_DIR, content_type)
     if not os.path.exists(source_dir):
@@ -31,7 +34,7 @@ def get_all_content(content_type):
                 item_data['content'] = html_content
                 item_data['slug'] = os.path.splitext(filename)[0]
                 
-                # Create the correct relative URL for the final site
+                # Create the correct root-relative URL for the final site
                 item_data['href'] = f"/{content_type.rstrip('s')}/{item_data['slug']}.html"
                 
                 if 'date' in item_data:
@@ -47,6 +50,9 @@ def get_all_content(content_type):
     return all_items
 
 def generate_pages(items, content_type, template_name, env):
+    """
+    Generates individual HTML pages for each content item.
+    """
     template = env.get_template(template_name)
     output_path = os.path.join(OUTPUT_DIR, content_type.rstrip('s'))
     os.makedirs(output_path, exist_ok=True)
@@ -63,6 +69,9 @@ def generate_pages(items, content_type, template_name, env):
 # --- MAIN BUILD SCRIPT ---
 
 def main():
+    """
+    The main function to build the static site.
+    """
     print("Starting build process...")
     if os.path.exists(OUTPUT_DIR):
         shutil.rmtree(OUTPUT_DIR)
