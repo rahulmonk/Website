@@ -4,18 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Brand New Thought on Automation - Rahul Gothwal</title>
-    <!-- Styles are identical, so they are omitted for brevity -->
-    <style>:root{--outer-bg:#1a1a1d;--window-bg:#252528;--content-bg:#363639;--sidebar-bg:#2c2c2f;--border-color:#4a4a4d;--text-primary:#e0e0e0;--text-secondary:#a0a0a0;--text-hover:#fff;--accent-active:#404043;--btn-red:#ff5f56;--btn-yellow:#ffbd2e;--btn-green:#27c93f;--icon-color:#9e9e9e} @import url(https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap); *{margin:0;padding:0;box-sizing:border-box} body{font-family:'Inter',sans-serif;background-color:var(--outer-bg);color:var(--text-primary);display:flex;justify-content:center;align-items:center;height:100vh;padding:1rem;overflow:hidden} #canvas-container{position:fixed;top:0;left:0;width:100%;height:100%;display:none;z-index:10} #drawing-canvas{display:block;width:100%;height:100%;cursor:crosshair} #canvas-ui{position:absolute;top:30px;left:50%;transform:translateX(-50%);z-index:15;display:flex;flex-direction:column;align-items:center;gap:15px;color:var(--text-secondary)} #canvas-ui h2{font-weight:500;color:var(--text-hover)} #screenshot-btn{background:var(--sidebar-bg);border:1px solid var(--border-color);color:var(--text-hover);padding:10px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background-color .2s ease} #screenshot-btn:hover{background:var(--accent-active)} #screenshot-btn svg{width:20px;height:20px} #closed-message{display:none;font-size:2rem;font-weight:600;color:var(--text-hover);text-align:center;position:relative;z-index:20} #dock{position:fixed;bottom:-80px;left:50%;transform:translateX(-50%);background-color:var(--sidebar-bg);padding:10px 20px;border-radius:12px 12px 0 0;box-shadow:0 -10px 30px rgba(0,0,0,.3);border:1px solid var(--border-color);border-bottom:none;cursor:pointer;display:flex;align-items:center;gap:10px;transition:bottom .4s cubic-bezier(.25,1,.5,1);z-index:1001} #dock.visible{bottom:0} #dock img{width:24px;height:24px;border-radius:50%} #dock span{font-weight:500} .window-container{width:100%;max-width:1200px;height:90vh;max-height:800px;background-color:var(--window-bg);border-radius:12px;box-shadow:0 25px 50px -12px rgba(0,0,0,.5);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--border-color);position:relative;z-index:100;transition:all .4s cubic-bezier(.25,1,.5,1);opacity:1;transform:scale(1)} .window-container.hidden{opacity:0;transform:scale(.95);pointer-events:none} .window-container.maximized{width:100vw;height:100vh;max-width:100vw;max-height:100vh;border-radius:0;top:0;left:0} .window-container.minimized{transform:scale(.8) translateY(120vh);opacity:0;pointer-events:none} .title-bar{display:flex;justify-content:space-between;align-items:center;padding:12px;background-color:var(--sidebar-bg);border-bottom:1px solid var(--border-color);flex-shrink:0;position:relative} .window-controls{display:flex;gap:8px;position:absolute;left:12px;top:50%;transform:translateY(-50%)} .control-btn{width:14px;height:14px;border-radius:50%;cursor:pointer;transition:transform .2s ease} .control-btn:hover{transform:scale(1.15)} .close{background-color:var(--btn-red)} .minimize{background-color:var(--btn-yellow)} .maximize{background-color:var(--btn-green)} .user-info{display:flex;align-items:center;gap:12px;position:absolute;left:50%;transform:translateX(-50%)} .user-info img{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-color)} .user-info span{font-weight:500} .current-thought{color:var(--text-secondary);font-size:.9rem;margin-left:auto} .main-content{display:flex;flex-grow:1;overflow:hidden;position:relative} .comments-sidebar{width:300px;background-color:var(--sidebar-bg);padding:20px;display:flex;flex-direction:column;border-right:1px solid var(--border-color);flex-shrink:0;overflow-y:auto} .comments-sidebar h3{font-size:1rem;color:var(--text-primary);margin-bottom:15px} #comment-form{display:flex;flex-direction:column;gap:10px;margin-bottom:20px} #comment-form input,#comment-form textarea{background-color:var(--content-bg);border:1px solid var(--border-color);color:var(--text-primary);padding:10px;border-radius:6px;font-family:'Inter',sans-serif;font-size:.9rem} #comment-form input::placeholder,#comment-form textarea::placeholder{color:var(--text-secondary)} #comment-form textarea{resize:vertical;min-height:80px} #comment-form button{background-color:var(--btn-green);color:#fff;border:none;padding:10px;border-radius:6px;font-weight:600;cursor:pointer;transition:background-color .2s ease,opacity .2s ease} #comment-form button:hover{background-color:#22a536} #comment-form button:disabled{background-color:#555;cursor:not-allowed;opacity:.7} #comments-list .comment{background-color:var(--content-bg);padding:12px;border-radius:6px;margin-bottom:10px;border:1px solid var(--border-color)} #comments-list .comment-author{font-weight:600;font-size:.9rem;margin-bottom:5px} #comments-list .comment-text{font-size:.85rem;color:var(--text-secondary);line-height:1.5;white-space:pre-wrap;word-wrap:break-word} .content-pane{flex-grow:1;padding:30px 40px;background-color:var(--content-bg);display:flex;flex-direction:column;overflow-y:auto} .blog-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:30px} .blog-header h1{font-size:2.5rem;font-weight:700;line-height:1.2} .blog-meta{text-align:right} .blog-meta .category{font-size:.9rem;font-weight:500;background-color:var(--accent-active);padding:5px 10px;border-radius:6px} .blog-meta .date{font-size:.85rem;color:var(--text-secondary);margin-top:8px} .blog-content{font-size:1.1rem;line-height:1.7;color:var(--text-secondary)} .blog-content p{margin-bottom:1.5em} .blog-content a{color:var(--btn-green);text-decoration:none} .blog-content a:hover{text-decoration:underline} .blog-content img{max-width:100%;border-radius:8px;margin:2em 0} .footer{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background-color:var(--sidebar-bg);border-top:1px solid var(--border-color);flex-shrink:0} #back-btn{background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--icon-color);text-decoration:none;transition:color .2s ease} #back-btn:hover{color:var(--text-hover)} #back-btn svg{width:22px;height:22px} @media (max-width:900px){.main-content{flex-direction:column-reverse} .comments-sidebar{width:100%;max-height:40vh;border-right:none;border-top:1px solid var(--border-color)} .blog-header{flex-direction:column;gap:15px} .blog-meta{text-align:left}} @media (max-width:768px){body{padding:0;align-items:flex-start} .window-container,.window-container.maximized{width:100vw;height:100vh;max-width:100vw;max-height:100vh;border-radius:0;border:none;box-shadow:none} .title-bar{justify-content:flex-start} .user-info span{display:none} .current-thought{display:none}}</style>
+    <style>
+        /* --- General Setup & Variables --- */
+        :root {
+            --outer-bg: #1a1a1d;
+            --window-bg: #252528;
+            --content-bg: #363639;
+            --sidebar-bg: #2c2c2f;
+            --border-color: #4a4a4d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --text-hover: #ffffff;
+            --accent-active: #404043;
+            --btn-red: #ff5f56;
+            --btn-yellow: #ffbd2e;
+            --btn-green: #27c93f;
+            --icon-color: #9e9e9e;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--outer-bg);
+            color: var(--text-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 1rem;
+            overflow: hidden;
+        }
+        
+        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 10; }
+        #drawing-canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
+        #canvas-ui { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); z-index: 15; display: flex; flex-direction: column; align-items: center; gap: 15px; color: var(--text-secondary); }
+        #canvas-ui h2 { font-weight: 500; color: var(--text-hover); }
+        #screenshot-btn { background: var(--sidebar-bg); border: 1px solid var(--border-color); color: var(--text-hover); padding: 10px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: background-color 0.2s ease; }
+        #screenshot-btn:hover { background: var(--accent-active); }
+        #screenshot-btn svg { width: 20px; height: 20px; }
+        #closed-message { display: none; font-size: 2rem; font-weight: 600; color: var(--text-hover); text-align: center; position: relative; z-index: 20; }
+        #dock { position: fixed; bottom: -80px; left: 50%; transform: translateX(-50%); background-color: var(--sidebar-bg); padding: 10px 20px; border-radius: 12px 12px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-bottom: none; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: bottom 0.4s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1001; }
+        #dock.visible { bottom: 0; }
+        #dock img { width: 24px; height: 24px; border-radius: 50%; }
+        #dock span { font-weight: 500; }
+
+        .window-container {
+            width: 100%; max-width: 1200px; height: 90vh; max-height: 800px;
+            background-color: var(--window-bg); border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex; flex-direction: column; overflow: hidden;
+            border: 1px solid var(--border-color); position: relative; z-index: 100;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); opacity: 1; transform: scale(1);
+        }
+        .window-container.hidden { opacity: 0; transform: scale(0.95); pointer-events: none; }
+        .window-container.maximized { width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; border-radius: 0; top: 0; left: 0; }
+        .window-container.minimized { transform: scale(0.8) translateY(120vh); opacity: 0; pointer-events: none; }
+
+        .title-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px; background-color: var(--sidebar-bg); border-bottom: 1px solid var(--border-color); flex-shrink: 0; position: relative; }
+        .window-controls { display: flex; gap: 8px; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); }
+        .control-btn { width: 14px; height: 14px; border-radius: 50%; cursor: pointer; transition: transform 0.2s ease; }
+        .control-btn:hover { transform: scale(1.15); }
+        .close { background-color: var(--btn-red); }
+        .minimize { background-color: var(--btn-yellow); }
+        .maximize { background-color: var(--btn-green); }
+        .user-info { display: flex; align-items: center; gap: 12px; position: absolute; left: 50%; transform: translateX(-50%); }
+        .user-info img { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--border-color); }
+        .user-info span { font-weight: 500; }
+        .current-thought { color: var(--text-secondary); font-size: 0.9rem; margin-left: auto; }
+        
+        .main-content { display: flex; flex-grow: 1; overflow: hidden; position: relative; }
+
+        .comments-sidebar { width: 300px; background-color: var(--sidebar-bg); padding: 20px; display: flex; flex-direction: column; border-right: 1px solid var(--border-color); flex-shrink: 0; overflow-y: auto; }
+        .comments-sidebar h3 { font-size: 1rem; color: var(--text-primary); margin-bottom: 15px; }
+        #comment-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        #comment-form input, #comment-form textarea { background-color: var(--content-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 0.9rem; }
+        #comment-form input::placeholder, #comment-form textarea::placeholder { color: var(--text-secondary); }
+        #comment-form textarea { resize: vertical; min-height: 80px; }
+        #comment-form button { background-color: var(--btn-green); color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease, opacity 0.2s ease; }
+        #comment-form button:hover { background-color: #22a536; }
+        #comment-form button:disabled { background-color: #555; cursor: not-allowed; opacity: 0.7; }
+        
+        #comments-list .comment { background-color: var(--content-bg); padding: 12px; border-radius: 6px; margin-bottom: 10px; border: 1px solid var(--border-color); }
+        #comments-list .comment-author { font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; }
+        #comments-list .comment-text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; }
+        
+        .content-pane { flex-grow: 1; padding: 30px 40px; background-color: var(--content-bg); display: flex; flex-direction: column; overflow-y: auto; }
+        .blog-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+        .blog-header h1 { font-size: 2.5rem; font-weight: 700; line-height: 1.2; }
+        .blog-meta { text-align: right; }
+        .blog-meta .category { font-size: 0.9rem; font-weight: 500; background-color: var(--accent-active); padding: 5px 10px; border-radius: 6px; }
+        .blog-meta .date { font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px; }
+        .blog-content { font-size: 1.1rem; line-height: 1.7; color: var(--text-secondary); }
+        .blog-content p { margin-bottom: 1.5em; }
+        .blog-content a { color: var(--btn-green); text-decoration: none; }
+        .blog-content a:hover { text-decoration: underline; }
+        .blog-content img { max-width: 100%; border-radius: 8px; margin: 2em 0; }
+        
+        .footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background-color: var(--sidebar-bg); border-top: 1px solid var(--border-color); flex-shrink: 0; }
+        #back-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--icon-color); text-decoration: none; transition: color 0.2s ease; }
+        #back-btn:hover { color: var(--text-hover); }
+        #back-btn svg { width: 22px; height: 22px; }
+
+        @media (max-width: 900px) {
+            .main-content { flex-direction: column-reverse; }
+            .comments-sidebar { width: 100%; max-height: 40vh; border-right: none; border-top: 1px solid var(--border-color); }
+            .blog-header { flex-direction: column; gap: 15px; }
+            .blog-meta { text-align: left; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 0; align-items: flex-start; }
+            .window-container, .window-container.maximized { width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; border-radius: 0; border: none; box-shadow: none; }
+            .title-bar { justify-content: flex-start; }
+            .user-info span { display: none; }
+            .current-thought { display: none; }
+        }
+    </style>
 </head>
 <body>
     <div id="closed-message">keep thinking, keep building</div>
-    <div id="canvas-container"><div id="canvas-ui"><h2>draw your thoughts</h2><button id="screenshot-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>Save</span></button></div><canvas id="drawing-canvas"></canvas></div>
-    <div id="dock"><img src="/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+    
+    <div id="canvas-container">
+        <div id="canvas-ui">
+            <h2>draw your thoughts</h2>
+            <button id="screenshot-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <span>Save</span>
+            </button>
+        </div>
+        <canvas id="drawing-canvas"></canvas>
+    </div>
+
+    <div id="dock">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZHRoPSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNhMGEwYTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLXVzZXIiPjxwYXRoIGQ9Ik0yMCAyMWE4IDggMCAwIDAtMTYgMCI+PC9wYXRoPjxjaXJjbGUgY3g9IjEyIiBjeT0iNyIgcj0iNCI+PC9jaXJjbGU+PC9zdmc+" alt="User Avatar">
+        <span>Rahul Gothwal</span>
+    </div>
 
     <div class="window-container">
         <header class="title-bar">
-            <div class="window-controls"><div class="control-btn close"></div><div class="control-btn minimize"></div><div class="control-btn maximize"></div></div>
-            <div class="user-info"><img src="/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+            <div class="window-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+            <div class="user-info">
+                 <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZHRoPSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNhMGEwYTAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0iZmVhdGhlciBmZWF0aGVyLXVzZXIiPjxwYXRoIGQ9Ik0yMCAyMWE4IDggMCAwIDAtMTYgMCI+PC9wYXRoPjxjaXJjbGUgY3g9IjEyIiBjeT0iNyIgcj0iNCI+PC9jaXJjbGU+PC9zdmc+" alt="User Avatar">
+                <span>Rahul Gothwal</span>
+            </div>
             <div class="current-thought">current thought</div>
         </header>
 
@@ -23,14 +164,18 @@
             <aside class="comments-sidebar">
                 <h3>Comments</h3>
                 <form id="comment-form">
-                    <input type="hidden" id="post-uid" value="67890">
-                    <input type="text" id="comment-name" placeholder="Your Name" required>
-                    <textarea id="comment-text" placeholder="Your Comment" required></textarea>
+                    <!-- This hidden input holds the unique ID for this specific blog post. -->
+                    <!-- Your build script will replace the 'value' with the UID from the markdown file. -->
+                    <input type="hidden" name="entry.1720438260" value="67890" />
+
+                    <input type="text" name="entry.1187372619" placeholder="Your Name" required />
+                    <textarea name="entry.1285059088" placeholder="Your Comment" required></textarea>
+
                     <button type="submit">Submit</button>
                 </form>
+                <p id="response-message" style="display:none; color:var(--btn-green); margin-top:10px;">Thanks for your comment!</p>
                 <div id="comments-list">
-                    <!-- A placeholder for the comment script -->
-                    <div class="comment"><p class="comment-text">Comments will be loaded here.</p></div>
+                    <!-- Comments will be loaded here -->
                 </div>
             </aside>
 
@@ -44,7 +189,7 @@
                         </div>
                     </header>
                     <div class="blog-content">
-                        <!-- The |safe filter tells Jinja to render the HTML from your markdown -->
+                        <img src="/assets/images/placeholder.jpg" alt="A placeholder image for the new thought." onerror="this.onerror=null;this.src='https://placehold.co/800x400/2c2c2f/e0e0e0?text=Image+Not+Found';">
                         <p>The process involves a few key steps:</p>
 <p>Writing: This is the part where the content is created in a simple .md file.</p>
 <p>Building: The build.py script converts this file into a full HTML page.</p>
@@ -57,19 +202,137 @@
 
         <footer class="footer">
             <div class="footer-left">
-                 <a href="/index.html?view=thoughts" id="back-btn">
+                 <a href="index.html?view=thoughts" id="back-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     <span>Back to Thoughts</span>
                  </a>
             </div>
-            <div class="footer-right"><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a></div>
+            <div class="footer-right">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
         </footer>
     </div>
 
     <script>
         // All general UI functionality (window controls, canvas, etc.) is the same.
-        // This code is identical to the previous version and is omitted for clarity.
-        document.addEventListener('DOMContentLoaded', () => { const windowContainer = document.querySelector('.window-container'); const maximizeBtn = document.querySelector('.control-btn.maximize'); const minimizeBtn = document.querySelector('.control-btn.minimize'); const closeBtn = document.querySelector('.control-btn.close'); const closedMessage = document.getElementById('closed-message'); const dock = document.getElementById('dock'); const canvasContainer = document.getElementById('canvas-container'); const canvas = document.getElementById('drawing-canvas'); const screenshotBtn = document.getElementById('screenshot-btn'); const ctx = canvas.getContext('2d'); let isDrawing = false; maximizeBtn.addEventListener('click', () => windowContainer.classList.toggle('maximized')); minimizeBtn.addEventListener('click', () => { windowContainer.classList.add('minimized'); dock.classList.add('visible'); canvasContainer.style.display = 'block'; }); dock.addEventListener('click', () => { windowContainer.classList.remove('minimized'); dock.classList.remove('visible'); canvasContainer.style.display = 'none'; clearCanvas(); }); closeBtn.addEventListener('click', () => { windowContainer.classList.add('hidden'); closedMessage.style.display = 'block'; dock.classList.remove('visible'); canvasContainer.style.display = 'none'; }); function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 3; ctx.lineCap = 'round'; } function getMousePos(evt) { const rect = canvas.getBoundingClientRect(); const clientX = evt.clientX || evt.touches[0].clientX; const clientY = evt.clientY || evt.touches[0].clientY; return { x: clientX - rect.left, y: clientY - rect.top }; } function startDrawing(e) { e.preventDefault(); isDrawing = true; const pos = getMousePos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); } function draw(e) { e.preventDefault(); if (!isDrawing) return; const pos = getMousePos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); } function stopDrawing(e) { e.preventDefault(); isDrawing = false; } function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); } screenshotBtn.addEventListener('click', () => { const tempCanvas = document.createElement('canvas'); const tempCtx = tempCanvas.getContext('2d'); tempCanvas.width = canvas.width; tempCanvas.height = canvas.height; tempCtx.fillStyle = getComputedStyle(document.body).getPropertyValue('--outer-bg').trim(); tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height); tempCtx.drawImage(canvas, 0, 0); const link = document.createElement('a'); link.download = 'my-thought.jpg'; link.href = tempCanvas.toDataURL('image/jpeg', 0.9); link.click(); }); resizeCanvas(); window.addEventListener('resize', resizeCanvas); canvas.addEventListener('mousedown', startDrawing); canvas.addEventListener('mousemove', draw); canvas.addEventListener('mouseup', stopDrawing); canvas.addEventListener('mouseout', stopDrawing); canvas.addEventListener('touchstart', startDrawing, { passive: false }); canvas.addEventListener('touchmove', draw, { passive: false }); canvas.addEventListener('touchend', stopDrawing); });
+        document.addEventListener('DOMContentLoaded', () => {
+            const windowContainer = document.querySelector('.window-container');
+            const maximizeBtn = document.querySelector('.control-btn.maximize');
+            const minimizeBtn = document.querySelector('.control-btn.minimize');
+            const closeBtn = document.querySelector('.control-btn.close');
+            const closedMessage = document.getElementById('closed-message');
+            const dock = document.getElementById('dock');
+            const canvasContainer = document.getElementById('canvas-container');
+            const canvas = document.getElementById('drawing-canvas');
+            const screenshotBtn = document.getElementById('screenshot-btn');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+            
+            maximizeBtn.addEventListener('click', () => windowContainer.classList.toggle('maximized'));
+            minimizeBtn.addEventListener('click', () => { windowContainer.classList.add('minimized'); dock.classList.add('visible'); canvasContainer.style.display = 'block'; });
+            dock.addEventListener('click', () => { windowContainer.classList.remove('minimized'); dock.classList.remove('visible'); canvasContainer.style.display = 'none'; clearCanvas(); });
+            closeBtn.addEventListener('click', () => { windowContainer.classList.add('hidden'); closedMessage.style.display = 'block'; dock.classList.remove('visible'); canvasContainer.style.display = 'none'; });
+
+            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 3; ctx.lineCap = 'round'; }
+            function getMousePos(evt) { const rect = canvas.getBoundingClientRect(); const clientX = evt.clientX || evt.touches[0].clientX; const clientY = evt.clientY || evt.touches[0].clientY; return { x: clientX - rect.left, y: clientY - rect.top }; }
+            function startDrawing(e) { e.preventDefault(); isDrawing = true; const pos = getMousePos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); }
+            function draw(e) { e.preventDefault(); if (!isDrawing) return; const pos = getMousePos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); }
+            function stopDrawing(e) { e.preventDefault(); isDrawing = false; }
+            function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+            screenshotBtn.addEventListener('click', () => {
+                const tempCanvas = document.createElement('canvas'); const tempCtx = tempCanvas.getContext('2d');
+                tempCanvas.width = canvas.width; tempCanvas.height = canvas.height;
+                tempCtx.fillStyle = getComputedStyle(document.body).getPropertyValue('--outer-bg').trim();
+                tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+                tempCtx.drawImage(canvas, 0, 0);
+                const link = document.createElement('a'); link.download = 'my-thought.jpg'; link.href = tempCanvas.toDataURL('image/jpeg', 0.9); link.click();
+            });
+
+            resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+            canvas.addEventListener('mousedown', startDrawing); canvas.addEventListener('mousemove', draw); canvas.addEventListener('mouseup', stopDrawing); canvas.addEventListener('mouseout', stopDrawing);
+            canvas.addEventListener('touchstart', startDrawing); canvas.addEventListener('touchmove', draw); canvas.addEventListener('touchend', stopDrawing);
+        });
+    </script>
+    
+    <!-- RESTORED SCRIPT FOR GOOGLE FORM COMMENTS -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- CONFIGURATION ---
+        // IMPORTANT: Replace these with your actual URLs
+        const COMMENTS_URL = "https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec";
+        const FORM_POST_URL = "https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse";
+
+        // --- ELEMENT REFERENCES ---
+        const commentsList = document.getElementById("comments-list");
+        const commentForm = document.getElementById("comment-form");
+        const responseMessage = document.getElementById("response-message");
+
+        function renderComment(commentObject) {
+            const commentElement = document.createElement("div");
+            commentElement.classList.add("comment");
+            const authorDiv = document.createElement('div');
+            authorDiv.className = 'comment-author';
+            authorDiv.textContent = commentObject.name || 'Anonymous';
+            const textP = document.createElement('p');
+            textP.className = 'comment-text';
+            textP.textContent = commentObject.comment || '';
+            commentElement.appendChild(authorDiv);
+            commentElement.appendChild(textP);
+            commentsList.appendChild(commentElement);
+        }
+
+        async function loadComments() {
+            const pageUID = document.querySelector('input[name="entry.1720438260"]').value;
+            if (!pageUID) {
+                console.error("Fatal: Page UID input field not found.");
+                return;
+            }
+            commentsList.innerHTML = "<div class='comment'><p class='comment-text'>Loading comments...</p></div>";
+            try {
+                const response = await fetch(COMMENTS_URL);
+                if (!response.ok) throw new Error(`Network error: ${response.status}`);
+                const allComments = await response.json();
+                if (!Array.isArray(allComments)) throw new Error("Invalid data format.");
+
+                const filteredComments = allComments.filter(entry => String(entry.uid) === pageUID);
+                commentsList.innerHTML = "";
+                if (filteredComments.length === 0) {
+                    commentsList.innerHTML = "<div class='comment'><p class='comment-text'>No comments yet. Be the first!</p></div>";
+                } else {
+                    filteredComments.forEach(renderComment);
+                }
+            } catch (err) {
+                console.error("Failed to load comments:", err);
+                commentsList.innerHTML = `<div class='comment'><p class='comment-text' style='color: var(--btn-red);'>Could not load comments.</p></div>`;
+            }
+        }
+
+        commentForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            const submitButton = form.querySelector('button');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            fetch(FORM_POST_URL, {
+                method: "POST",
+                mode: "no-cors",
+                body: data,
+            })
+            .finally(() => {
+                form.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit';
+                responseMessage.style.display = "block";
+                setTimeout(() => { responseMessage.style.display = "none"; }, 4000);
+                setTimeout(loadComments, 2000); // Reload comments after a delay
+            });
+        });
+
+        loadComments();
+    });
     </script>
 </body>
 </html>

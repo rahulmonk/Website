@@ -11,32 +11,32 @@
     <div id="closed-message">keep thinking, keep building</div>
     <div id="canvas-container"><div id="canvas-ui"><h2>draw your thoughts</h2><button id="screenshot-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>Save</span></button></div><canvas id="drawing-canvas"></canvas></div>
     <div id="lightbox"><img src="" alt="Enlarged gallery image"></div>
-    <div id="dock"><img src="/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+    <div id="dock"><img src="/Website/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
 
     <div class="window-container">
         <header class="title-bar">
             <div class="window-controls"><div class="control-btn close"></div><div class="control-btn minimize"></div><div class="control-btn maximize"></div></div>
-            <div class="user-info"><img src="/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+            <div class="user-info"><img src="/Website/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
             <div class="current-thought">current thought</div>
         </header>
 
         <div class="main-content">
             <nav class="sidebar">
                 <h3>Folders</h3>
-                <a href="/index.html?view=projects" class="nav-item active">
+                <a href="/Website/index.html?view=projects" class="nav-item active">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                     <span>Projects</span>
                 </a>
-                <a href="/index.html?view=thoughts" class="nav-item">
+                <a href="/Website/index.html?view=thoughts" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                     <span>Thoughts</span>
                 </a>
                 <div class="contact">
-                    <a href="/index.html?view=about" class="nav-item">
+                    <a href="/Website/index.html?view=about" class="nav-item">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         <span>About</span>
                     </a>
-                    <a href="mailto:rahul.datamonk@gmail.com" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span>Email Me</span></a>
+                    <a href="mailto:richard.davis@example.com" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span>Email Me</span></a>
                 </div>
             </nav>
 
@@ -56,9 +56,9 @@
                     <aside class="project-gallery">
                          <div class="gallery-grid">
                             
-                            <img src="/assets/images/placeholder.jpg" alt="Gallery image">
+                            <img src="/Website/assets/images/placeholder.jpg" alt="Gallery image">
                             
-                            <img src="/assets/images/placeholder.jpg" alt="Gallery image">
+                            <img src="/Website/assets/images/placeholder.jpg" alt="Gallery image">
                             
                          </div>
                     </aside>
@@ -68,7 +68,7 @@
 
         <footer class="footer">
             <div class="footer-left">
-                 <a href="/index.html?view=projects" id="back-btn">
+                 <a href="/Website/index.html?view=projects" id="back-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     <span>Back to Projects</span>
                  </a>
@@ -77,9 +77,7 @@
         </footer>
     </div>
     <script>
-        // All general UI functionality (window controls, canvas, lightbox etc.) is the same.
-        // This code is identical to the previous version and is omitted for clarity.
-        document.addEventListener('DOMContentLoaded',()=>{const e=document.querySelector(".window-container"),t=document.querySelector(".control-btn.maximize"),o=document.querySelector(".control-btn.minimize"),n=document.querySelector(".control-btn.close"),c=document.getElementById("closed-message"),i=document.getElementById("dock"),d=document.getElementById("canvas-container"),l=document.getElementById("drawing-canvas"),a=document.getElementById("screenshot-btn"),s=l.getContext("2d");let r=!1;const m=document.getElementById("lightbox"),u=m.querySelector("img"),g=document.querySelectorAll(".gallery-grid img");g.forEach(t=>{t.addEventListener("click",()=>{u.src=t.src,m.classList.add("active"),e.classList.add("blurred")})}),m.addEventListener("click",()=>{m.classList.remove("active"),e.classList.remove("blurred")}),t.addEventListener("click",()=>e.classList.toggle("maximized")),o.addEventListener("click",()=>{e.classList.add("minimized"),i.classList.add("visible"),d.style.display="block"}),i.addEventListener("click",()=>{e.classList.remove("minimized"),i.classList.remove("visible"),d.style.display="none",v()}),n.addEventListener("click",()=>{e.classList.add("hidden"),c.style.display="block",i.classList.remove("visible"),d.style.display="none"});function E(){l.width=window.innerWidth,l.height=window.innerHeight,s.strokeStyle="#FFFFFF",s.lineWidth=3,s.lineCap="round"}function v(){s.clearRect(0,0,l.width,l.height)}E(),window.addEventListener("resize",E),l.addEventListener("mousedown",function(e){e.preventDefault(),r=!0;const t=function(e){const t=l.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}(e);s.beginPath(),s.moveTo(t.x,t.y)}),l.addEventListener("mousemove",function(e){e.preventDefault(),r&&(s.lineTo(function(e){const t=l.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}(e).x,getMousePos(e).y),s.stroke())}),l.addEventListener("mouseup",function(e){e.preventDefault(),r=!1}),l.addEventListener("mouseout",function(e){e.preventDefault(),r=!1}),l.addEventListener("touchstart",startDrawing,{passive:!1}),l.addEventListener("touchmove",draw,{passive:!1}),l.addEventListener("touchend",stopDrawing),a.addEventListener("click",()=>{const e=document.createElement("canvas"),t=e.getContext("2d");e.width=l.width,e.height=l.height,t.fillStyle=getComputedStyle(document.body).getPropertyValue("--outer-bg").trim(),t.fillRect(0,0,e.width,e.height),t.drawImage(l,0,0);const o=document.createElement("a");o.download="my-thought.jpg",o.href=e.toDataURL("image/jpeg",.9),o.click()})});
+        document.addEventListener('DOMContentLoaded',()=>{const e=document.querySelector(".window-container"),t=document.querySelector(".control-btn.maximize"),o=document.querySelector(".control-btn.minimize"),n=document.querySelector(".control-btn.close"),c=document.getElementById("closed-message"),i=document.getElementById("dock"),d=document.getElementById("canvas-container"),l=document.getElementById("drawing-canvas"),a=document.getElementById("screenshot-btn"),s=l.getContext("2d");let r=!1;const m=document.getElementById("lightbox"),u=m.querySelector("img"),g=document.querySelectorAll(".gallery-grid img");g.forEach(t=>{t.addEventListener("click",()=>{u.src=t.src,m.classList.add("active"),e.classList.add("blurred")})}),m.addEventListener("click",()=>{m.classList.remove("active"),e.classList.remove("blurred")}),t.addEventListener("click",()=>e.classList.toggle("maximized")),o.addEventListener("click",()=>{e.classList.add("minimized"),i.classList.add("visible"),d.style.display="block"}),i.addEventListener("click",()=>{e.classList.remove("minimized"),i.classList.remove("visible"),d.style.display="none",v()}),n.addEventListener("click",()=>{e.classList.add("hidden"),c.style.display="block",i.classList.remove("visible"),d.style.display="none"});function E(){l.width=window.innerWidth,l.height=window.innerHeight,s.strokeStyle="#FFFFFF",s.lineWidth=3,s.lineCap="round"}function v(){s.clearRect(0,0,l.width,l.height)}fetch("/Website/assets/js/thoughts.json").then(e=>{if(!e.ok)throw new Error("Network response was not ok");return e.json()}).then(e=>{const t=e.thoughts;t&&t.length>0&&(document.querySelector(".current-thought").textContent=t[Math.floor(Math.random()*t.length)])}).catch(e=>{console.error("Error fetching thoughts:",e),document.querySelector(".current-thought").textContent="create freely"}),E(),window.addEventListener("resize",E),l.addEventListener("mousedown",function(e){e.preventDefault(),r=!0;const t=function(e){const t=l.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}(e);s.beginPath(),s.moveTo(t.x,t.y)}),l.addEventListener("mousemove",function(e){e.preventDefault(),r&&s.lineTo(function(e){const t=l.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}(e).x,function(e){const t=l.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}(e).y),s.stroke()}),l.addEventListener("mouseup",function(e){e.preventDefault(),r=!1}),l.addEventListener("mouseout",function(e){e.preventDefault(),r=!1}),l.addEventListener("touchstart",function(e){e.preventDefault(),r=!0;const t=function(e){const t=l.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}(e);s.beginPath(),s.moveTo(t.x,t.y)},{passive:!1}),l.addEventListener("touchmove",function(e){e.preventDefault(),r&&s.lineTo(function(e){const t=l.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}(e).x,function(e){const t=l.getBoundingClientRect(),n=e.clientX||e.touches[0].clientX,o=e.clientY||e.touches[0].clientY;return{x:n-t.left,y:o-t.top}}(e).y),s.stroke()},{passive:!1}),l.addEventListener("touchend",function(e){e.preventDefault(),r=!1}),a.addEventListener("click",()=>{const e=document.createElement("canvas"),t=e.getContext("2d");e.width=l.width,e.height=l.height,t.fillStyle=getComputedStyle(document.body).getPropertyValue("--outer-bg").trim(),t.fillRect(0,0,e.width,e.height),t.drawImage(l,0,0);const o=document.createElement("a");o.download="my-thought.jpg",o.href=e.toDataURL("image/jpeg",.9),o.click()})});
     </script>
 </body>
 </html>
