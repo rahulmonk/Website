@@ -27,19 +27,20 @@ def get_all_content(content_type):
     for filename in os.listdir(source_dir):
         if filename.endswith('.md'):
             try:
-                post = frontmatter.load(os.path.join(source_dir, filename))
+                with open(os.path.join(source_dir, filename), 'r', encoding='utf-8') as f:
+                    post = frontmatter.load(f)
+                
                 html_content = markdown.markdown(post.content)
                 
                 item_data = post.metadata
                 item_data['content'] = html_content
                 item_data['slug'] = os.path.splitext(filename)[0]
                 
-                # Determine the correct output folder ('blog' for 'posts', 'projects' for 'projects')
                 output_folder = 'blog' if content_type == 'posts' else 'projects'
                 item_data['href'] = f"/{output_folder}/{item_data['slug']}.html"
                 
                 if 'date' in item_data:
-                    item_data['date_obj'] = datetime.strptime(item_data['date'], '%Y-%m-%d')
+                    item_data['date_obj'] = datetime.strptime(str(item_data['date']), '%Y-%m-%d')
                 else:
                     item_data['date_obj'] = datetime.now()
 
@@ -56,14 +57,10 @@ def generate_pages(items, content_type_plural, template_name, env):
     `content_type_plural` should be 'posts' or 'projects'.
     """
     template = env.get_template(template_name)
-    
-    # 'posts' -> 'blog', 'projects' -> 'projects'
     output_folder_name = 'blog' if content_type_plural == 'posts' else 'projects'
     output_path = os.path.join(OUTPUT_DIR, output_folder_name)
     os.makedirs(output_path, exist_ok=True)
     
-    # *** THIS IS THE CRITICAL FIX ***
-    # Determine the key to use in the template context: 'post' or 'project'
     context_key = content_type_plural.rstrip('s')
     
     for item in items:
@@ -99,8 +96,9 @@ def main():
         autoescape=select_autoescape(['html', 'xml'])
     )
 
-    # We now correctly pass 'posts' or 'projects' to the function
     if posts:
+        # **THE FIX IS HERE:**
+        # Pass 'posts' to correctly create the 'post' variable in the template.
         generate_pages(posts, 'posts', 'blog_post_template.html', env)
     if projects:
         generate_pages(projects, 'projects', 'project_page_template.html', env)
