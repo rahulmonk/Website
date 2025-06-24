@@ -1,6 +1,10 @@
 ---
-title: "The Importance of Spacing in UI Design" date: "2023-04-01" category: "Web Design" uid: 12345 image: "../assets/images/my-first-post/diagram.jpg" image_alt: "A diagram showing proper spacing and layout in user interface design."
-This is where the main body of your article begins. You can use standard Markdown to format your text.
+title: "A Brand New Thought on Automation"
+date: "2025-06-24"
+category: "Development"
+uid: 67890
+image: "/assets/images/placeholder.jpg"
+image_alt: "A placeholder image for the new thought."
 ---
 
 For example, you can create headings:
