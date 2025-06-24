@@ -1,4 +1,4 @@
-title: "Project Gamma - The Workflow Engine"
+ttitle: "Project Gamma - The Workflow Engine"
 date: "2025-06-20"
 youtube_id: "y_IeU_ut2z4"
 images:
