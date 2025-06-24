@@ -1,3 +1,4 @@
+---
 ttitle: "Project Gamma - The Workflow Engine"
 date: "2025-06-20"
 youtube_id: "y_IeU_ut2z4"
@@ -6,6 +7,7 @@ images:
 "/assets/images/gallery/1.jpg"
 
 "/assets/images/gallery/2.jpg"
+---
 
 This page describes Project Gamma, a test of the project page generation system.
 
