@@ -34,8 +34,9 @@ def get_all_content(content_type):
                 item_data['content'] = html_content
                 item_data['slug'] = os.path.splitext(filename)[0]
                 
-                # Create the correct root-relative URL for the final site
-                item_data['href'] = f"/{content_type.rstrip('s')}/{item_data['slug']}.html"
+                # Determine the correct output folder ('blog' for 'posts', 'projects' for 'projects')
+                output_folder = 'blog' if content_type == 'posts' else 'projects'
+                item_data['href'] = f"/{output_folder}/{item_data['slug']}.html"
                 
                 if 'date' in item_data:
                     item_data['date_obj'] = datetime.strptime(item_data['date'], '%Y-%m-%d')
@@ -49,16 +50,23 @@ def get_all_content(content_type):
     all_items.sort(key=lambda x: x['date_obj'], reverse=True)
     return all_items
 
-def generate_pages(items, content_type, template_name, env):
+def generate_pages(items, content_type_plural, template_name, env):
     """
     Generates individual HTML pages for each content item.
+    `content_type_plural` should be 'posts' or 'projects'.
     """
     template = env.get_template(template_name)
-    output_path = os.path.join(OUTPUT_DIR, content_type.rstrip('s'))
+    
+    # 'posts' -> 'blog', 'projects' -> 'projects'
+    output_folder_name = 'blog' if content_type_plural == 'posts' else 'projects'
+    output_path = os.path.join(OUTPUT_DIR, output_folder_name)
     os.makedirs(output_path, exist_ok=True)
     
+    # *** THIS IS THE CRITICAL FIX ***
+    # Determine the key to use in the template context: 'post' or 'project'
+    context_key = content_type_plural.rstrip('s')
+    
     for item in items:
-        context_key = content_type.rstrip('s')
         context = {context_key: item}
         output_file_path = os.path.join(output_path, f"{item['slug']}.html")
         
@@ -91,8 +99,9 @@ def main():
         autoescape=select_autoescape(['html', 'xml'])
     )
 
+    # We now correctly pass 'posts' or 'projects' to the function
     if posts:
-        generate_pages(posts, 'blog', 'blog_post_template.html', env)
+        generate_pages(posts, 'posts', 'blog_post_template.html', env)
     if projects:
         generate_pages(projects, 'projects', 'project_page_template.html', env)
 
