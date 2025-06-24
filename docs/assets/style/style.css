@@ -1,0 +1,135 @@
+:root {
+  --outer-bg: #1a1a1d;
+  --window-bg: #252528;
+  --content-bg: #363639;
+  --sidebar-bg: #2c2c2f;
+  --border-color: #4a4a4d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --text-hover: #ffffff;
+  --accent-active: #404043;
+  --btn-red: #ff5f56;
+  --btn-yellow: #ffbd2e;
+  --btn-green: #27c93f;
+  --icon-color: #9e9e9e;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--outer-bg);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 10;
+}
+
+#drawing-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+#canvas-ui {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: var(--text-secondary);
+}
+
+#canvas-ui h2 {
+  font-weight: 500;
+  color: var(--text-hover);
+}
+
+#screenshot-btn {
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-hover);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+#screenshot-btn:hover {
+  background: var(--accent-active);
+}
+
+#screenshot-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+#closed-message {
+  display: none;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-hover);
+  text-align: center;
+  position: relative;
+  z-index: 20;
+}
+
+#dock {
+  position: fixed;
+  bottom: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--sidebar-bg);
+  padding: 10px 20px;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color);
+  border-bottom: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: bottom 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 1001;
+}
+
+#dock.visible {
+  bottom: 0;
+}
+
+#dock img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+#dock span {
+  font-weight: 500;
+}
