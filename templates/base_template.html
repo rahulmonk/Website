@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{# This data-site-prefix is important for the JS to find assets correctly #}
+<html lang="en" data-site-prefix="{{ SITE_CONFIG.PREFIX }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Rahul Gothwal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ SITE_CONFIG.PREFIX }}/assets/css/style.css">
+</head>
+<body>
+    {# This is all the common HTML structure outside the main window #}
+    <div id="closed-message">keep thinking, keep building</div>
+
+    <div id="canvas-container">
+        <div id="canvas-ui">
+            <h2>draw your thoughts</h2>
+            <button id="screenshot-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <span>Save</span>
+            </button>
+        </div>
+        <canvas id="drawing-canvas"></canvas>
+    </div>
+
+    <div id="lightbox">
+        <img src="" alt="Enlarged gallery image">
+    </div>
+
+    <div id="dock">
+        <img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar">
+        <span>Rahul Gothwal</span>
+    </div>
+
+    {# This is the main window structure that all pages share #}
+    <div class="window-container">
+        <header class="title-bar">
+            <div class="window-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+            <div class="user-info">
+                 <img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar">
+                <span>Rahul Gothwal</span>
+            </div>
+            <div class="current-thought">create freely</div>
+             <div class="hamburger-menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </div>
+        </header>
+
+        {# This block will be replaced by the unique content of each child template #}
+        {% block main_content %}
+        {% endblock %}
+
+        {# All pages share the same footer structure #}
+        <footer class="footer">
+            {% block footer_content %}
+            {# A default footer can be defined here if needed #}
+            {% endblock %}
+        </footer>
+    </div>
+    
+    {# The shared JavaScript file is included for all pages #}
+    <script src="{{ SITE_CONFIG.PREFIX }}/assets/js/style.js" defer></script>
+    
+    {# This block allows child pages to insert their own specific JavaScript #}
+    {% block page_specific_script %}
+    {% endblock %}
+</body>
+</html>

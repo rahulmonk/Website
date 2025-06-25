@@ -1,93 +1,63 @@
-<!DOCTYPE html>
-<html lang="en" data-site-prefix="{{ SITE_CONFIG.PREFIX }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }} - Rahul Gothwal</title>
-    <link rel="stylesheet" href="{{ SITE_CONFIG.PREFIX }}/assets/css/style.css">
-</head>
-<body>
-    <div id="closed-message">keep thinking, keep building</div>
+{% extends "base_template.html" %}
 
-    <div id="canvas-container">
-        <div id="canvas-ui">
-            <h2>draw your thoughts</h2>
-            <button id="screenshot-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-                <span>Save</span>
-            </button>
+{# This block sets the unique title for the blog post page #}
+{% block title %}{{ post.title }} - Rahul Gothwal{% endblock %}
+
+{# This block defines the unique main content for the blog post page #}
+{% block main_content %}
+<div class="main-content blog-layout">
+    <aside class="comments-sidebar">
+        <h3>Comments</h3>
+        <form id="comment-form">
+            <input type="hidden" name="entry.1720438260" value="{{ post.uid }}" />
+            <input type="text" name="entry.1187372619" placeholder="Your Name" required />
+            <textarea name="entry.1285059088" placeholder="Your Comment" required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="response-message" style="display:none; color:var(--btn-green); margin-top:10px;">Thanks for your comment!</p>
+        <div id="comments-list">
+            <div class="comment"><p class="comment-text">Loading comments...</p></div>
         </div>
-        <canvas id="drawing-canvas"></canvas>
-    </div>
+    </aside>
 
-    <div id="dock">
-        <img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar">
-        <span>Rahul Gothwal</span>
-    </div>
-
-    <div class="window-container">
-        <header class="title-bar">
-            <div class="window-controls">
-                <div class="control-btn close"></div>
-                <div class="control-btn minimize"></div>
-                <div class="control-btn maximize"></div>
-            </div>
-            <div class="user-info">
-                 <img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar">
-                <span>Rahul Gothwal</span>
-            </div>
-            <div class="current-thought">create freely</div>
-        </header>
-
-        <div class="main-content blog-layout">
-            <aside class="comments-sidebar">
-                <h3>Comments</h3>
-                <form id="comment-form">
-                    <input type="hidden" name="entry.1720438260" value="{{ post.uid }}" />
-                    <input type="text" name="entry.1187372619" placeholder="Your Name" required />
-                    <textarea name="entry.1285059088" placeholder="Your Comment" required></textarea>
-                    <button type="submit">Submit</button>
-                </form>
-                <p id="response-message" style="display:none; color:var(--btn-green); margin-top:10px;">Thanks for your comment!</p>
-                <div id="comments-list">
-                    <div class="comment"><p class="comment-text">Loading comments...</p></div>
+    <main class="content-pane">
+        <article>
+            <header class="blog-header">
+                <h1>{{ post.title }}</h1>
+                <div class="blog-meta">
+                    <div class="category">{{ post.category }}</div>
+                    <div class="date">{{ post.date_obj.strftime('%b %d, %Y') }}</div>
                 </div>
-            </aside>
-
-            <main class="content-pane">
-                <article>
-                    <header class="blog-header">
-                        <h1>{{ post.title }}</h1>
-                        <div class="blog-meta">
-                            <div class="category">{{ post.category }}</div>
-                            <div class="date">{{ post.date_obj.strftime('%b %d, %Y') }}</div>
-                        </div>
-                    </header>
-                    <div class="blog-content">
-                        <img src="{{ SITE_CONFIG.PREFIX }}{{ post.image }}" alt="{{ post.image_alt }}" onerror="this.onerror=null;this.src='https://placehold.co/800x400/2c2c2f/e0e0e0?text=Image+Not+Found';">
-                        {{ post.content | safe }}
-                    </div>
-                </article>
-            </main>
-        </div>
-
-        <footer class="footer">
-            <div class="footer-left">
-                 <a href="{{ SITE_CONFIG.PREFIX }}/index.html?view=thoughts" id="back-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    <span>Back to Thoughts</span>
-                 </a>
+            </header>
+            <div class="blog-content">
+                <img src="{{ SITE_CONFIG.PREFIX }}{{ post.image }}" alt="{{ post.image_alt }}" onerror="this.onerror=null;this.src='https://placehold.co/800x400/2c2c2f/e0e0e0?text=Image+Not+Found';">
+                {{ post.content | safe }}
             </div>
-            <div class="footer-right">
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>
-            </div>
-        </footer>
-    </div>
-    
-    <script src="{{ SITE_CONFIG.PREFIX }}/assets/js/style.js" defer></script>
-    <script>
+        </article>
+    </main>
+</div>
+{% endblock %}
+
+
+{# This block defines the unique footer for the blog post page #}
+{% block footer_content %}
+<div class="footer-left">
+     <a href="{{ SITE_CONFIG.PREFIX }}/index.html?view=thoughts" id="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>Back to Thoughts</span>
+     </a>
+</div>
+<div class="footer-right">
+    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+    </a>
+</div>
+{% endblock %}
+
+
+{# This block injects the unique JavaScript for the blog page's comment system #}
+{% block page_specific_script %}
+<script>
     // --- BLOG-POST-SPECIFIC SCRIPT (Refactored for new Apps Script) ---
     document.addEventListener('DOMContentLoaded', () => {
         const commentForm = document.getElementById("comment-form");
@@ -168,6 +138,5 @@
             loadComments();
         }
     });
-    </script>
-</body>
-</html>
+</script>
+{% endblock %}
