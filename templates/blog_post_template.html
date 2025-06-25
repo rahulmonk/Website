@@ -108,19 +108,19 @@
                 commentsList.innerHTML = "<div class='comment'><p class='comment-text'>Loading comments...</p></div>";
                 
                 try {
-                    const response = await fetch(COMMENTS_URL);
+                    // This fetch call now includes the UID to get pre-filtered data from the Apps Script
+                    const response = await fetch(`${COMMENTS_URL}?uid=${pageUID}`);
                     if (!response.ok) throw new Error(`Network error: ${response.status}`);
                     
-                    const allComments = await response.json();
-                    if (!Array.isArray(allComments)) throw new Error("Invalid data format.");
+                    // The response JSON is already filtered, so we can use it directly
+                    const comments = await response.json();
+                    if (!Array.isArray(comments)) throw new Error("Invalid data format.");
 
-                    const filteredComments = allComments.filter(entry => String(entry.uid) === pageUID);
-                    
                     commentsList.innerHTML = ""; // Clear loading message
-                    if (filteredComments.length === 0) {
+                    if (comments.length === 0) {
                         commentsList.innerHTML = "<div class='comment'><p class='comment-text'>No comments yet. Be the first!</p></div>";
                     } else {
-                        filteredComments.forEach(comment => {
+                        comments.forEach(comment => {
                             const commentElement = document.createElement("div");
                             commentElement.classList.add("comment");
                             commentElement.innerHTML = `<div class="comment-author">${comment.name || 'Anonymous'}</div><p class="comment-text">${comment.comment || ''}</p>`;
