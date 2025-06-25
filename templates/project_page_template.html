@@ -8,6 +8,7 @@
 </head>
 <body>
     <div id="closed-message">keep thinking, keep building</div>
+    
     <div id="canvas-container">
         <div id="canvas-ui">
             <h2>draw your thoughts</h2>
@@ -18,13 +19,27 @@
         </div>
         <canvas id="drawing-canvas"></canvas>
     </div>
-    <div id="lightbox"><img src="" alt="Enlarged gallery image"></div>
-    <div id="dock"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+
+    <div id="lightbox">
+        <img src="" alt="Enlarged gallery image">
+    </div>
+
+    <div id="dock">
+        <img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar">
+        <span>Rahul Gothwal</span>
+    </div>
 
     <div class="window-container">
         <header class="title-bar">
-            <div class="window-controls"><div class="control-btn close"></div><div class="control-btn minimize"></div><div class="control-btn maximize"></div></div>
-            <div class="user-info"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+            <div class="window-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+            <div class="user-info">
+                 <img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar">
+                <span>Rahul Gothwal</span>
+            </div>
             <div class="current-thought">create freely</div>
         </header>
 
@@ -39,17 +54,21 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                     <span>Thoughts</span>
                 </a>
+                
                 <div class="contact">
                     <a href="{{ SITE_CONFIG.PREFIX }}/index.html?view=about" class="nav-item">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         <span>About</span>
                     </a>
-                    <a href="mailto:rahul.gothwal@example.com" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span>Email Me</span></a>
+                    <a href="mailto:rahul.gothwal@example.com" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span>Email Me</span>
+                    </a>
                 </div>
             </nav>
 
             <main class="content-pane">
-                <div class="project-description">
+                 <div class="project-description">
                     <h1>{{ project.title }}</h1>
                     <div>{{ project.content | safe }}</div>
                 </div>
@@ -63,6 +82,8 @@
                          <div class="gallery-grid">
                             {% for image_path in project.images %}
                             <img src="{{ SITE_CONFIG.PREFIX }}{{ image_path | trim }}" alt="Gallery image for {{ project.title }}">
+                            {% else %}
+                            <p>No images for this project.</p>
                             {% endfor %}
                          </div>
                     </aside>
@@ -77,10 +98,38 @@
                     <span>Back to Projects</span>
                  </a>
             </div>
-            <div class="footer-right"><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a></div>
+            <div class="footer-right">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
         </footer>
     </div>
-    
+
     <script src="{{ SITE_CONFIG.PREFIX }}/assets/js/style.js" defer></script>
+    <script>
+        // --- PROJECT-PAGE-SPECIFIC SCRIPT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const lightbox = document.getElementById('lightbox');
+            if (lightbox) {
+                const lightboxImg = lightbox.querySelector('img');
+                const galleryImages = document.querySelectorAll('.gallery-grid img');
+                const windowContainer = document.querySelector('.window-container');
+
+                galleryImages.forEach(image => {
+                    image.addEventListener('click', () => {
+                        lightboxImg.src = image.src;
+                        lightbox.classList.add('active');
+                        windowContainer?.classList.add('blurred');
+                    });
+                });
+
+                lightbox.addEventListener('click', () => {
+                    lightbox.classList.remove('active');
+                    windowContainer?.classList.remove('blurred');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

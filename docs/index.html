@@ -3,36 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/Website/assets/css/style.css">
     <title>Rahul Gothwal - Portfolio</title>
+    <link rel="stylesheet" href="/Website/assets/css/style.css">
 </head>
 <body>
     <div id="closed-message">keep thinking, keep building</div>
-    <div id="canvas-container"><div id="canvas-ui"><h2>draw your thoughts</h2><button id="screenshot-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>Save</span></button></div><canvas id="drawing-canvas"></canvas></div>
-    <div id="dock"><img src="/Website/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+
+    <div id="canvas-container">
+        <div id="canvas-ui">
+            <h2>draw your thoughts</h2>
+            <button id="screenshot-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <span>Save</span>
+            </button>
+        </div>
+        <canvas id="drawing-canvas"></canvas>
+    </div>
+
+    <div id="dock">
+        <img src="/Website/assets/images/avatar.png" alt="User Avatar">
+        <span>Rahul Gothwal</span>
+    </div>
 
     <div class="window-container">
         <header class="title-bar">
-            <div class="window-controls"><div class="control-btn close"></div><div class="control-btn minimize"></div><div class="control-btn maximize"></div></div>
-            <div class="user-info"><img src="/Website/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+            <div class="window-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+            <div class="user-info">
+                 <img src="/Website/assets/images/avatar.png" alt="User Avatar">
+                <span>Rahul Gothwal</span>
+            </div>
             <div class="current-thought">create freely</div>
-            <div class="hamburger-menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
+             <div class="hamburger-menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </div>
         </header>
+
         <div class="main-content">
             <nav class="sidebar">
                 <h3>Folders</h3>
-                <div id="nav-projects" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span>Projects</span></div>
-                <div id="nav-thoughts" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg><span>Thoughts</span></div>
+                <div id="nav-projects" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    <span>Projects</span>
+                </div>
+                <div id="nav-thoughts" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    <span>Thoughts</span>
+                </div>
+                
                 <div class="contact">
-                    <div id="nav-about" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><span>About</span></div>
-                    <a href="mailto:rahul.gothwal@example.com" class="nav-item"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span>Email Me</span></a>
+                    <div id="nav-about" class="nav-item">
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        <span>About</span>
+                    </div>
+                    <a href="mailto:rahul.gothwal@example.com" class="nav-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span>Email Me</span>
+                    </a>
                 </div>
             </nav>
+
             <main class="content-pane"></main>
         </div>
+
         <footer class="footer">
-            <div class="footer-left"><div class="view-toggle"><svg id="view-list" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="active"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg><svg id="view-grid" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></div></div>
-            <div class="footer-right"><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a></div>
+            <div class="footer-left">
+                 <div class="view-toggle">
+                    <svg id="view-list" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="active"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    <svg id="view-grid" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                 </div>
+            </div>
+            <div class="footer-right">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
         </footer>
     </div>
     
@@ -45,7 +93,7 @@
                 <tr class="article-item">
                     <td><a href="/Website/blog/first_blog.html"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg><span class="article-name">A Brand New Thought on Automation</span></a></td>
                     <td class="category">Development</td>
-                    <td class="date">2025-06-24</td>
+                    <td class="date">Jun 24, 2025</td>
                 </tr>
                 
             </tbody>
@@ -70,9 +118,87 @@
 
     <template id="about-template">
         <div class="breadcrumbs">Home → <span>About Me</span></div>
-        <div class="page-content"><h2>About Rahul Gothwal</h2><p>I am a passionate developer... (content omitted)</p></div>
+        <div class="page-content">
+            <h2>About Rahul Gothwal</h2>
+            <p>I am a passionate developer with a knack for creating beautiful, functional, and user-centered digital experiences. With a background in both design and development, I bridge the gap between aesthetics and technology.</p>
+        </div>
     </template>
 
     <script src="/Website/assets/js/style.js" defer></script>
+    <script>
+        // --- INDEX-PAGE-SPECIFIC SCRIPT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const contentPane = document.querySelector('.content-pane');
+            const viewToggleContainer = document.querySelector('.view-toggle');
+
+            const navItems = {
+                projects: document.getElementById('nav-projects'),
+                thoughts: document.getElementById('nav-thoughts'),
+                about: document.getElementById('nav-about'),
+            };
+
+            const updateView = (viewName) => {
+                if (!contentPane) return;
+
+                const template = document.getElementById(`${viewName}-template`);
+                if (template) {
+                    contentPane.innerHTML = ''; // Clear previous content
+                    contentPane.appendChild(template.content.cloneNode(true));
+                }
+
+                // Update active class on sidebar navigation
+                Object.values(navItems).forEach(item => item?.classList.remove('active'));
+                navItems[viewName]?.classList.add('active');
+
+                // Show view-toggle buttons only for 'thoughts' view
+                if (viewToggleContainer) {
+                    viewToggleContainer.style.display = (viewName === 'thoughts') ? 'flex' : 'none';
+                }
+                
+                // Reset to list view by default
+                contentPane.classList.remove('grid-view');
+                document.getElementById('view-list')?.classList.add('active');
+                document.getElementById('view-grid')?.classList.remove('active');
+            };
+
+            const handleNavClick = (viewName, e) => {
+                e.preventDefault();
+                const url = new URL(window.location);
+                url.searchParams.set('view', viewName);
+                // Update URL without reloading the page
+                history.pushState({view: viewName}, '', url);
+                updateView(viewName);
+            };
+
+            // Add event listeners for sidebar navigation
+            Object.entries(navItems).forEach(([viewName, element]) => {
+                element?.addEventListener('click', (e) => handleNavClick(viewName, e));
+            });
+            
+            // Add event listeners for list/grid view toggle
+            const viewListBtn = document.getElementById('view-list');
+            const viewGridBtn = document.getElementById('view-grid');
+
+            viewListBtn?.addEventListener('click', () => {
+                if (contentPane?.classList.contains('grid-view')) {
+                    contentPane.classList.remove('grid-view');
+                    viewListBtn.classList.add('active');
+                    viewGridBtn.classList.remove('active');
+                }
+            });
+
+            viewGridBtn?.addEventListener('click', () => {
+                if (contentPane && !contentPane.classList.contains('grid-view')) {
+                    contentPane.classList.add('grid-view');
+                    viewGridBtn.classList.add('active');
+                    viewListBtn.classList.remove('active');
+                }
+            });
+
+            // Set initial view based on URL on page load
+            const initialView = new URLSearchParams(window.location.search).get('view') || 'projects';
+            updateView(initialView);
+        });
+    </script>
 </body>
 </html>

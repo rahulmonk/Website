@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // === Element Selections ===
+
+    // --- Element Selections ---
     const windowContainer = document.querySelector('.window-container');
     const maximizeBtn = document.querySelector('.control-btn.maximize');
     const minimizeBtn = document.querySelector('.control-btn.minimize');
     const closeBtn = document.querySelector('.control-btn.close');
+    const hamburgerMenu = document.querySelector('.hamburger-menu');
+    const sidebar = document.querySelector('.sidebar');
     const closedMessage = document.getElementById('closed-message');
     const dock = document.getElementById('dock');
     const canvasContainer = document.getElementById('canvas-container');
@@ -11,13 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const screenshotBtn = document.getElementById('screenshot-btn');
     const currentThoughtEl = document.querySelector('.current-thought');
 
-    // === Dynamic Thought Display ===
+    // --- Dynamic Thought Display ---
     async function setRandomThought() {
         if (!currentThoughtEl) return;
         const prefix = document.documentElement.dataset.sitePrefix || '';
         try {
+            // Correctly constructs the path using the prefix from the HTML tag
             const response = await fetch(`${prefix}/assets/js/thoughts.json`);
-            if (!response.ok) return;
+            if (!response.ok) throw new Error('Network response was not ok');
+            
             const data = await response.json();
             if (data.thoughts && data.thoughts.length > 0) {
                 const randomIndex = Math.floor(Math.random() * data.thoughts.length);
@@ -25,12 +30,51 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error("Could not fetch thoughts:", error);
-            // The default thought remains if the fetch fails
+            currentThoughtEl.textContent = 'create freely'; // Fallback
         }
     }
     setRandomThought();
 
-    // === UI, Canvas & Dock Interaction ===
+    // --- UI Window & Mobile Controls ---
+    if (windowContainer) {
+        maximizeBtn?.addEventListener('click', () => windowContainer.classList.toggle('maximized'));
+        
+        minimizeBtn?.addEventListener('click', () => {
+            windowContainer.classList.add('minimized');
+            dock?.classList.add('visible');
+            if (canvasContainer) canvasContainer.style.display = 'block';
+        });
+
+        closeBtn?.addEventListener('click', () => {
+            windowContainer.classList.add('hidden');
+            closedMessage.style.display = 'block';
+            dock?.classList.remove('visible');
+            if (canvasContainer) canvasContainer.style.display = 'none';
+        });
+
+        dock?.addEventListener('click', () => {
+            windowContainer.classList.remove('minimized');
+            dock.classList.remove('visible');
+            if (canvasContainer) {
+                canvasContainer.style.display = 'none';
+                const ctx = canvas?.getContext('2d');
+                ctx?.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas on restore
+            }
+        });
+        
+        hamburgerMenu?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            sidebar?.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (sidebar && !sidebar.contains(e.target) && !hamburgerMenu?.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+    }
+
+    // --- Canvas Drawing Functionality ---
     if (canvas) {
         const ctx = canvas.getContext('2d');
         let isDrawing = false;
@@ -53,10 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const startDrawing = (e) => { e.preventDefault(); isDrawing = true; const pos = getMousePos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); };
         const draw = (e) => { e.preventDefault(); if (!isDrawing) return; const pos = getMousePos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); };
         const stopDrawing = (e) => { e.preventDefault(); isDrawing = false; };
-        const clearCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        minimizeBtn?.addEventListener('click', () => { windowContainer.classList.add('minimized'); dock.classList.add('visible'); canvasContainer.style.display = 'block'; });
-        dock?.addEventListener('click', () => { windowContainer.classList.remove('minimized'); dock.classList.remove('visible'); canvasContainer.style.display = 'none'; clearCanvas(); });
         
         screenshotBtn?.addEventListener('click', () => {
             const tempCanvas = document.createElement('canvas');
@@ -70,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.click();
         });
 
+        // Initialize and add all event listeners for the canvas
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
         canvas.addEventListener('mousedown', startDrawing);
@@ -79,46 +120,5 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.addEventListener('touchstart', startDrawing, { passive: false });
         canvas.addEventListener('touchmove', draw, { passive: false });
         canvas.addEventListener('touchend', stopDrawing);
-    }
-    
-    maximizeBtn?.addEventListener('click', () => windowContainer.classList.toggle('maximized'));
-    closeBtn?.addEventListener('click', () => { windowContainer.classList.add('hidden'); closedMessage.style.display = 'block'; dock.classList.remove('visible'); if(canvasContainer) canvasContainer.style.display = 'none'; });
-
-    // === Dynamic Content Loading (SPA-like functionality on index.html) ===
-    const contentPane = document.querySelector('.content-pane');
-    const navItems = {
-        projects: document.getElementById('nav-projects'),
-        thoughts: document.getElementById('nav-thoughts'),
-        about: document.getElementById('nav-about')
-    };
-
-    if (contentPane && navItems.projects) { // Only run this logic on the main page
-        const updateView = (viewName) => {
-            const template = document.getElementById(`${viewName}-template`);
-            if (!template) { console.error(`Template for view "${viewName}" not found!`); return; }
-            
-            contentPane.innerHTML = ''; // Clear previous content
-            contentPane.appendChild(template.content.cloneNode(true));
-            
-            // Update active class on navigation
-            Object.values(navItems).forEach(item => item?.classList.remove('active'));
-            navItems[viewName]?.classList.add('active');
-        };
-
-        const handleNavClick = (viewName, e) => {
-            e.preventDefault();
-            const currentUrl = new URL(window.location);
-            currentUrl.searchParams.set('view', viewName);
-            history.pushState({view: viewName}, '', currentUrl);
-            updateView(viewName);
-        };
-
-        Object.entries(navItems).forEach(([viewName, element]) => {
-            element?.addEventListener('click', (e) => handleNavClick(viewName, e));
-        });
-
-        // Load content based on URL parameter on initial load
-        const initialView = new URLSearchParams(window.location.search).get('view') || 'projects';
-        updateView(initialView);
     }
 });

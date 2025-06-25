@@ -3,22 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ SITE_CONFIG.PREFIX }}/assets/css/style.css">
     <title>{{ post.title }} - Rahul Gothwal</title>
+    <link rel="stylesheet" href="{{ SITE_CONFIG.PREFIX }}/assets/css/style.css">
 </head>
 <body>
     <div id="closed-message">keep thinking, keep building</div>
-    <div id="canvas-container"><div id="canvas-ui"><h2>draw your thoughts</h2><button id="screenshot-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>Save</span></button></div><canvas id="drawing-canvas"></canvas></div>
-    <div id="dock"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+
+    <div id="canvas-container">
+        <div id="canvas-ui">
+            <h2>draw your thoughts</h2>
+            <button id="screenshot-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <span>Save</span>
+            </button>
+        </div>
+        <canvas id="drawing-canvas"></canvas>
+    </div>
+
+    <div id="dock">
+        <img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar">
+        <span>Rahul Gothwal</span>
+    </div>
 
     <div class="window-container">
         <header class="title-bar">
-            <div class="window-controls"><div class="control-btn close"></div><div class="control-btn minimize"></div><div class="control-btn maximize"></div></div>
-            <div class="user-info"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+            <div class="window-controls">
+                <div class="control-btn close"></div>
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+            </div>
+            <div class="user-info">
+                 <img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar">
+                <span>Rahul Gothwal</span>
+            </div>
             <div class="current-thought">create freely</div>
         </header>
 
-        <div class="main-content">
+        <div class="main-content blog-layout">
             <aside class="comments-sidebar">
                 <h3>Comments</h3>
                 <form id="comment-form">
@@ -28,7 +49,9 @@
                     <button type="submit">Submit</button>
                 </form>
                 <p id="response-message" style="display:none; color:var(--btn-green); margin-top:10px;">Thanks for your comment!</p>
-                <div id="comments-list"><div class="comment"><p class="comment-text">Loading comments...</p></div></div>
+                <div id="comments-list">
+                    <div class="comment"><p class="comment-text">Loading comments...</p></div>
+                </div>
             </aside>
 
             <main class="content-pane">
@@ -37,7 +60,7 @@
                         <h1>{{ post.title }}</h1>
                         <div class="blog-meta">
                             <div class="category">{{ post.category }}</div>
-                            <div class="date">{{ post.date }}</div>
+                            <div class="date">{{ post.date_obj.strftime('%b %d, %Y') }}</div>
                         </div>
                     </header>
                     <div class="blog-content">
@@ -55,68 +78,85 @@
                     <span>Back to Thoughts</span>
                  </a>
             </div>
-            <div class="footer-right"><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a></div>
+            <div class="footer-right">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+            </div>
         </footer>
     </div>
     
     <script src="{{ SITE_CONFIG.PREFIX }}/assets/js/style.js" defer></script>
     <script>
-    // This script now ONLY handles the comment functionality specific to this page.
+    // --- BLOG-POST-SPECIFIC SCRIPT ---
     document.addEventListener('DOMContentLoaded', () => {
-        // --- CONFIGURATION (from build.py) ---
-        const COMMENTS_URL = "https://script.google.com/macros/s/{{ SITE_CONFIG.GOOGLE_APPS_SCRIPT_ID }}/exec";
-        const FORM_POST_URL = "https://docs.google.com/forms/d/e/{{ SITE_CONFIG.GOOGLE_FORM_ID }}/formResponse";
-
-        const commentsList = document.getElementById("comments-list");
         const commentForm = document.getElementById("comment-form");
-        const responseMessage = document.getElementById("response-message");
+        if(commentForm) {
+            // --- CONFIGURATION (from build.py) ---
+            const COMMENTS_URL = "https://script.google.com/macros/s/{{ SITE_CONFIG.GOOGLE_APPS_SCRIPT_ID }}/exec";
+            const FORM_POST_URL = "https://docs.google.com/forms/d/e/{{ SITE_CONFIG.GOOGLE_FORM_ID }}/formResponse";
 
-        async function loadComments() {
-            const pageUID = document.querySelector('input[name="entry.1720438260"]').value;
-            if (!pageUID) { console.error("Fatal: Page UID not found."); return; }
-            commentsList.innerHTML = "<div class='comment'><p class='comment-text'>Loading comments...</p></div>";
-            try {
-                const response = await fetch(COMMENTS_URL);
-                if (!response.ok) throw new Error(`Network error: ${response.status}`);
-                const allComments = await response.json();
-                if (!Array.isArray(allComments)) throw new Error("Invalid data format.");
+            const commentsList = document.getElementById("comments-list");
+            const responseMessage = document.getElementById("response-message");
+            const pageUIDInput = commentForm.querySelector('input[name="entry.1720438260"]');
 
-                const filteredComments = allComments.filter(entry => String(entry.uid) === pageUID);
-                commentsList.innerHTML = "";
-                if (filteredComments.length === 0) {
-                    commentsList.innerHTML = "<div class='comment'><p class='comment-text'>No comments yet. Be the first!</p></div>";
-                } else {
-                    filteredComments.forEach(comment => {
-                        const commentElement = document.createElement("div");
-                        commentElement.classList.add("comment");
-                        commentElement.innerHTML = `<div class="comment-author">${comment.name || 'Anonymous'}</div><p class="comment-text">${comment.comment || ''}</p>`;
-                        commentsList.appendChild(commentElement);
-                    });
+            async function loadComments() {
+                const pageUID = pageUIDInput?.value;
+                if (!pageUID) { console.error("Fatal: Page UID not found."); return; }
+                if (!commentsList) return;
+
+                commentsList.innerHTML = "<div class='comment'><p class='comment-text'>Loading comments...</p></div>";
+                
+                try {
+                    const response = await fetch(COMMENTS_URL);
+                    if (!response.ok) throw new Error(`Network error: ${response.status}`);
+                    
+                    const allComments = await response.json();
+                    if (!Array.isArray(allComments)) throw new Error("Invalid data format.");
+
+                    const filteredComments = allComments.filter(entry => String(entry.uid) === pageUID);
+                    
+                    commentsList.innerHTML = ""; // Clear loading message
+                    if (filteredComments.length === 0) {
+                        commentsList.innerHTML = "<div class='comment'><p class='comment-text'>No comments yet. Be the first!</p></div>";
+                    } else {
+                        filteredComments.forEach(comment => {
+                            const commentElement = document.createElement("div");
+                            commentElement.classList.add("comment");
+                            commentElement.innerHTML = `<div class="comment-author">${comment.name || 'Anonymous'}</div><p class="comment-text">${comment.comment || ''}</p>`;
+                            commentsList.appendChild(commentElement);
+                        });
+                    }
+                } catch (err) {
+                    console.error("Failed to load comments:", err);
+                    commentsList.innerHTML = `<div class='comment'><p class='comment-text' style='color: var(--btn-red);'>Could not load comments.</p></div>`;
                 }
-            } catch (err) {
-                console.error("Failed to load comments:", err);
-                commentsList.innerHTML = `<div class='comment'><p class='comment-text' style='color: var(--btn-red);'>Could not load comments.</p></div>`;
             }
-        }
 
-        commentForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            const data = new FormData(commentForm);
-            const submitButton = commentForm.querySelector('button');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Submitting...';
-            fetch(FORM_POST_URL, { method: "POST", mode: "no-cors", body: data })
-            .finally(() => {
-                commentForm.reset();
-                submitButton.disabled = false;
-                submitButton.textContent = 'Submit';
-                responseMessage.style.display = "block";
-                setTimeout(() => { responseMessage.style.display = "none"; }, 4000);
-                setTimeout(loadComments, 2000);
+            commentForm.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const data = new FormData(commentForm);
+                const submitButton = commentForm.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+                
+                fetch(FORM_POST_URL, { method: "POST", mode: "no-cors", body: data })
+                .finally(() => {
+                    commentForm.reset();
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Submit';
+                    if (responseMessage) {
+                        responseMessage.style.display = "block";
+                        setTimeout(() => { responseMessage.style.display = "none"; }, 4000);
+                    }
+                    // Refresh comments after a delay to allow the spreadsheet to update
+                    setTimeout(loadComments, 2000);
+                });
             });
-        });
 
-        loadComments();
+            // Initial load of comments
+            loadComments();
+        }
     });
     </script>
 </body>
