@@ -16,7 +16,7 @@ ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
 SITE_CONFIG = {
     "PREFIX": "/Website", # For GitHub Pages subdirectory
     "GOOGLE_FORM_ID": "1FAIpQLScu-rCofPVVChXIY-asiuNfePkW0Io5zn3OcNAjMoQL75wWMA",
-    "GOOGLE_APPS_SCRIPT_ID": "AKfycbxAzfb4OuTml9-J8aKTKX4g-6paZd-CHU60TcsFwsUPATCG4UerTdCm45w680r2ZTK2HA"
+    "GOOGLE_APPS_SCRIPT_ID": "AKfycbwpVxn0N9Xvrt7Q80x4J3RvH3nm30wCileY2_EHInXNJzpvIq__nJJ2LCHnW9IaS2Dq"
 }
 
 # Configuration-driven content types for easier maintenance

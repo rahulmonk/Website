@@ -88,51 +88,62 @@
     
     <script src="{{ SITE_CONFIG.PREFIX }}/assets/js/style.js" defer></script>
     <script>
-    // --- BLOG-POST-SPECIFIC SCRIPT ---
+    // --- BLOG-POST-SPECIFIC SCRIPT (Refactored for new Apps Script) ---
     document.addEventListener('DOMContentLoaded', () => {
         const commentForm = document.getElementById("comment-form");
         if(commentForm) {
-            // --- CONFIGURATION (from build.py) ---
             const COMMENTS_URL = "https://script.google.com/macros/s/{{ SITE_CONFIG.GOOGLE_APPS_SCRIPT_ID }}/exec";
-            const FORM_POST_URL = "https://docs.google.com/forms/d/e/{{ SITE_CONFIG.GOOGLE_FORM_ID}}/formResponse";
+            const FORM_POST_URL = "https://docs.google.com/forms/d/e/{{ SITE_CONFIG.GOOGLE_FORM_ID }}/formResponse";
 
             const commentsList = document.getElementById("comments-list");
             const responseMessage = document.getElementById("response-message");
             const pageUIDInput = commentForm.querySelector('input[name="entry.1720438260"]');
 
-            async function loadComments() {
-                const pageUID = pageUIDInput?.value;
-                if (!pageUID) { console.error("Fatal: Page UID not found."); return; }
+            /**
+             * This is the callback function that Google's script will execute.
+             * It must be on the window object to be globally accessible.
+             * @param {Array} data The array of comment objects from the Apps Script.
+             */
+            window.handleComments = function(data) {
                 if (!commentsList) return;
+                commentsList.innerHTML = ""; // Clear "Loading..." message
 
-                commentsList.innerHTML = "<div class='comment'><p class='comment-text'>Loading comments...</p></div>";
-                
-                try {
-                    // This fetch call now includes the UID to get pre-filtered data from the Apps Script
-                    const response = await fetch(`${COMMENTS_URL}?uid=${pageUID}`);
-                    if (!response.ok) throw new Error(`Network error: ${response.status}`);
-                    
-                    // The response JSON is already filtered, so we can use it directly
-                    const comments = await response.json();
-                    if (!Array.isArray(comments)) throw new Error("Invalid data format.");
-
-                    commentsList.innerHTML = ""; // Clear loading message
-                    if (comments.length === 0) {
-                        commentsList.innerHTML = "<div class='comment'><p class='comment-text'>No comments yet. Be the first!</p></div>";
-                    } else {
-                        comments.forEach(comment => {
-                            const commentElement = document.createElement("div");
-                            commentElement.classList.add("comment");
-                            commentElement.innerHTML = `<div class="comment-author">${comment.name || 'Anonymous'}</div><p class="comment-text">${comment.comment || ''}</p>`;
-                            commentsList.appendChild(commentElement);
-                        });
-                    }
-                } catch (err) {
-                    console.error("Failed to load comments:", err);
-                    commentsList.innerHTML = `<div class='comment'><p class='comment-text' style='color: var(--btn-red);'>Could not load comments.</p></div>`;
+                if (!data || data.length === 0) {
+                    commentsList.innerHTML = "<div class='comment'><p class='comment-text'>No comments yet. Be the first!</p></div>";
+                } else {
+                    data.forEach(comment => {
+                        const commentElement = document.createElement("div");
+                        commentElement.classList.add("comment");
+                        commentElement.innerHTML = `<div class="comment-author">${comment.name || 'Anonymous'}</div><p class="comment-text">${comment.comment || ''}</p>`;
+                        commentsList.appendChild(commentElement);
+                    });
                 }
             }
 
+            /**
+             * Creates and injects a script tag to make the JSONP request.
+             */
+            function loadComments() {
+                const pageUID = pageUIDInput?.value;
+                if (!pageUID || !commentsList) return;
+                
+                commentsList.innerHTML = "<div class='comment'><p class='comment-text'>Loading comments...</p></div>";
+
+                const oldScript = document.getElementById("jsonp-script");
+                if (oldScript) oldScript.remove();
+
+                const script = document.createElement("script");
+                script.id = "jsonp-script";
+                script.src = `${COMMENTS_URL}?uid=${pageUID}&callback=handleComments`;
+                
+                script.onerror = () => {
+                    commentsList.innerHTML = `<div class='comment'><p class='comment-text' style='color: var(--btn-red);'>Could not load comments.</p></div>`;
+                };
+
+                document.body.appendChild(script);
+            }
+
+            // Form submission logic remains the same
             commentForm.addEventListener("submit", function (e) {
                 e.preventDefault();
                 const data = new FormData(commentForm);
@@ -149,12 +160,11 @@
                         responseMessage.style.display = "block";
                         setTimeout(() => { responseMessage.style.display = "none"; }, 4000);
                     }
-                    // Refresh comments after a delay to allow the spreadsheet to update
                     setTimeout(loadComments, 2000);
                 });
             });
 
-            // Initial load of comments
+            // Initial load of comments when the page loads.
             loadComments();
         }
     });
