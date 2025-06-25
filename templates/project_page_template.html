@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-site-prefix="{{ SITE_PREFIX }}">
+<html lang="en" data-site-prefix="{{ SITE_CONFIG.PREFIX }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ project.title }} - Rahul Gothwal</title>
-    <link rel="stylesheet" href="{{ SITE_PREFIX }}/assets/css/style.css">
+    <link rel="stylesheet" href="{{ SITE_CONFIG.PREFIX }}/assets/css/style.css">
 </head>
 <body>
     <div id="closed-message">keep thinking, keep building</div>
@@ -19,28 +19,28 @@
         <canvas id="drawing-canvas"></canvas>
     </div>
     <div id="lightbox"><img src="" alt="Enlarged gallery image"></div>
-    <div id="dock"><img src="assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+    <div id="dock"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
 
     <div class="window-container">
         <header class="title-bar">
             <div class="window-controls"><div class="control-btn close"></div><div class="control-btn minimize"></div><div class="control-btn maximize"></div></div>
-            <div class="user-info"><img src="assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+            <div class="user-info"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
             <div class="current-thought">create freely</div>
         </header>
 
         <div class="main-content">
             <nav class="sidebar">
                 <h3>Folders</h3>
-                <a href="{{ SITE_PREFIX }}/index.html?view=projects" class="nav-item active">
+                <a href="{{ SITE_CONFIG.PREFIX }}/index.html?view=projects" class="nav-item active">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                     <span>Projects</span>
                 </a>
-                <a href="{{ SITE_PREFIX }}/index.html?view=thoughts" class="nav-item">
+                <a href="{{ SITE_CONFIG.PREFIX }}/index.html?view=thoughts" class="nav-item">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                     <span>Thoughts</span>
                 </a>
                 <div class="contact">
-                    <a href="{{ SITE_PREFIX }}/index.html?view=about" class="nav-item">
+                    <a href="{{ SITE_CONFIG.PREFIX }}/index.html?view=about" class="nav-item">
                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                         <span>About</span>
                     </a>
@@ -62,7 +62,7 @@
                     <aside class="project-gallery">
                          <div class="gallery-grid">
                             {% for image_path in project.images %}
-                            <img src="{{ SITE_PREFIX }}{{ image_path | trim }}" alt="Gallery image for {{ project.title }}">
+                            <img src="{{ SITE_CONFIG.PREFIX }}{{ image_path | trim }}" alt="Gallery image for {{ project.title }}">
                             {% endfor %}
                          </div>
                     </aside>
@@ -72,7 +72,7 @@
 
         <footer class="footer">
             <div class="footer-left">
-                 <a href="{{ SITE_PREFIX }}/index.html?view=projects" id="back-btn">
+                 <a href="{{ SITE_CONFIG.PREFIX }}/index.html?view=projects" id="back-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     <span>Back to Projects</span>
                  </a>
@@ -81,6 +81,6 @@
         </footer>
     </div>
     
-    <script src="{{ SITE_PREFIX }}/assets/js/style.js" defer></script>
+    <script src="{{ SITE_CONFIG.PREFIX }}/assets/js/style.js" defer></script>
 </body>
 </html>

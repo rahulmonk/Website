@@ -1,21 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-site-prefix="{{ SITE_PREFIX }}">
+<html lang="en" data-site-prefix="{{ SITE_CONFIG.PREFIX }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link to external stylesheet -->
-    <link rel="stylesheet" href="{{ SITE_PREFIX }}/assets/css/style.css">
+    <link rel="stylesheet" href="{{ SITE_CONFIG.PREFIX }}/assets/css/style.css">
     <title>Rahul Gothwal - Portfolio</title>
 </head>
 <body>
     <div id="closed-message">keep thinking, keep building</div>
     <div id="canvas-container"><div id="canvas-ui"><h2>draw your thoughts</h2><button id="screenshot-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>Save</span></button></div><canvas id="drawing-canvas"></canvas></div>
-    <div id="dock"><img src="assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+    <div id="dock"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
 
     <div class="window-container">
         <header class="title-bar">
             <div class="window-controls"><div class="control-btn close"></div><div class="control-btn minimize"></div><div class="control-btn maximize"></div></div>
-            <div class="user-info"><img src="assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+            <div class="user-info"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
             <div class="current-thought">create freely</div>
             <div class="hamburger-menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div>
         </header>
@@ -44,7 +43,7 @@
             <tbody>
                 {% for post in posts %}
                 <tr class="article-item">
-                    <td><a href="{{ SITE_PREFIX }}{{ post.href }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg><span class="article-name">{{ post.title }}</span></a></td>
+                    <td><a href="{{ SITE_CONFIG.PREFIX }}{{ post.href }}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg><span class="article-name">{{ post.title }}</span></a></td>
                     <td class="category">{{ post.category }}</td>
                     <td class="date">{{ post.date }}</td>
                 </tr>
@@ -62,7 +61,7 @@
             <p>Here are some of the projects I've worked on, showcasing my skills in web development and design.</p><br>
             <div class="projects-grid">
                 {% for project in projects %}
-                <a href="{{ SITE_PREFIX }}{{ project.href }}" class="project-card">
+                <a href="{{ SITE_CONFIG.PREFIX }}{{ project.href }}" class="project-card">
                     <h3>{{ project.title }}</h3>
                     <p>{{ project.content | striptags | truncate(100) }}</p>
                 </a>
@@ -78,6 +77,6 @@
         <div class="page-content"><h2>About Rahul Gothwal</h2><p>I am a passionate developer... (content omitted)</p></div>
     </template>
 
-    <script src="{{ SITE_PREFIX }}/assets/js/style.js" defer></script>
+    <script src="{{ SITE_CONFIG.PREFIX }}/assets/js/style.js" defer></script>
 </body>
 </html>

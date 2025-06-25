@@ -1,7 +1,11 @@
 .
 ├── assets
+│   ├── css
+│   │   └── style.css
 │   ├── images
+│   │   └── placeholder.jpg
 │   └── js
+│       ├── style.js
 │       └── thoughts.json
 ├── build_and_push.sh
 ├── build.py
@@ -14,8 +18,12 @@
 │       └── project.md
 ├── docs
 │   ├── assets
+│   │   ├── css
+│   │   │   └── style.css
 │   │   ├── images
+│   │   │   └── placeholder.jpg
 │   │   └── js
+│   │       ├── style.js
 │   │       └── thoughts.json
 │   ├── blog
 │   │   ├── blog.html
@@ -1399,4 +1407,4 @@
     ├── lib64 -> lib
     └── pyvenv.cfg
 
-163 directories, 1237 files
+165 directories, 1243 files

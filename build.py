@@ -11,15 +11,36 @@ CONTENT_DIR = os.path.join(BASE_DIR, 'content')
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 OUTPUT_DIR = os.path.join(BASE_DIR, 'docs')
 ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
-# ** THE FIX IS HERE: This prefix is added to all URLs to make them work on GitHub Pages **
-SITE_PREFIX = "/Website" 
+
+# Centralized configuration for site-wide variables and secrets
+SITE_CONFIG = {
+    "PREFIX": "/Website", # For GitHub Pages subdirectory
+    "GOOGLE_FORM_ID": "YOUR_GOOGLE_FORM_ID",
+    "GOOGLE_APPS_SCRIPT_ID": "YOUR_APPS_SCRIPT_ID"
+}
+
+# Configuration-driven content types for easier maintenance
+CONTENT_TYPES = [
+    {
+        "name": "posts",
+        "output_dir": "blog",
+        "template": "blog_post_template.html",
+        "context_key": "post"
+    },
+    {
+        "name": "projects",
+        "output_dir": "projects",
+        "template": "project_page_template.html",
+        "context_key": "project"
+    }
+]
 
 # --- HELPER FUNCTIONS ---
 
-def get_all_content(content_type):
-    """Loads all markdown files from a content directory (e.g., 'posts' or 'projects')."""
+def get_all_content(content_name, output_dir):
+    """Loads all markdown files from a content directory (e.g., 'posts')."""
     all_items = []
-    source_dir = os.path.join(CONTENT_DIR, content_type)
+    source_dir = os.path.join(CONTENT_DIR, content_name)
     if not os.path.exists(source_dir):
         print(f"Warning: Directory not found, skipping: {source_dir}")
         return []
@@ -35,11 +56,10 @@ def get_all_content(content_type):
                     item_data = post.metadata
                     item_data['content'] = markdown.markdown(post.content)
                     item_data['slug'] = os.path.splitext(filename)[0]
-                    
-                    output_folder = 'blog' if content_type == 'posts' else 'projects'
-                    item_data['href'] = f"/{output_folder}/{item_data['slug']}.html"
+                    item_data['href'] = f"/{output_dir}/{item_data['slug']}.html"
                     
                     if 'date' in item_data:
+                        # Ensure date is parsed correctly from YAML (which can be a date object)
                         item_data['date_obj'] = datetime.strptime(str(item_data['date']), '%Y-%m-%d')
                     else:
                         item_data['date_obj'] = datetime.now()
@@ -52,18 +72,18 @@ def get_all_content(content_type):
     all_items.sort(key=lambda x: x['date_obj'], reverse=True)
     return all_items
 
-def generate_pages(items, content_type_plural, template_name, env):
-    """Generates individual HTML pages for each content item."""
-    template = env.get_template(template_name)
-    output_folder_name = 'blog' if content_type_plural == 'posts' else 'projects'
-    output_path = os.path.join(OUTPUT_DIR, output_folder_name)
+def generate_pages(items, config, env):
+    """Generates individual HTML pages for each content item based on the config."""
+    template = env.get_template(config['template'])
+    output_path = os.path.join(OUTPUT_DIR, config['output_dir'])
     os.makedirs(output_path, exist_ok=True)
     
-    context_key = content_type_plural.rstrip('s')
-    
     for item in items:
-        # Pass the SITE_PREFIX to the individual page templates
-        context = {context_key: item, "SITE_PREFIX": SITE_PREFIX}
+        # The context now includes the specific item and the global site config
+        context = {
+            config['context_key']: item, 
+            "SITE_CONFIG": SITE_CONFIG
+        }
         output_file_path = os.path.join(output_path, f"{item['slug']}.html")
         
         with open(output_file_path, 'w', encoding='utf-8') as f:
@@ -84,11 +104,15 @@ def main():
         shutil.copytree(ASSETS_DIR, os.path.join(OUTPUT_DIR, 'assets'))
         print("✓ Copied static assets")
 
-    posts = get_all_content('posts')
-    projects = get_all_content('projects')
-    print(f"✓ Loaded {len(posts)} posts and {len(projects)} projects")
-
-    if not posts and not projects:
+    # Load all content types by iterating through the configuration
+    content_data = {}
+    for content_type in CONTENT_TYPES:
+        content_name = content_type["name"]
+        content_data[content_name] = get_all_content(content_name, content_type["output_dir"])
+        print(f"✓ Loaded {len(content_data[content_name])} {content_name}")
+    
+    # Halt build if no content was loaded at all
+    if not any(content_data.values()):
         print("WARNING: No content loaded. Check for errors above. Halting build.")
         with open(os.path.join(OUTPUT_DIR, 'index.html'), 'w') as f:
             f.write('<h1>Build Failed: No content found. Check terminal for errors.</h1>')
@@ -96,15 +120,21 @@ def main():
 
     env = Environment(loader=FileSystemLoader(TEMPLATES_DIR), autoescape=select_autoescape(['html', 'xml']))
 
-    if posts:
-        generate_pages(posts, 'posts', 'blog_post_template.html', env)
-    if projects:
-        generate_pages(projects, 'projects', 'project_page_template.html', env)
+    # Generate pages for each content type by iterating through the configuration
+    for content_type in CONTENT_TYPES:
+        name = content_type["name"]
+        if content_data[name]:
+            generate_pages(content_data[name], content_type, env)
 
+    # Render the main index page
     index_template = env.get_template('index_template.html')
-    index_html = index_template.render(posts=posts, projects=projects, SITE_PREFIX=SITE_PREFIX)
+    index_context = {
+        "posts": content_data.get("posts", []),
+        "projects": content_data.get("projects", []),
+        "SITE_CONFIG": SITE_CONFIG
+    }
     with open(os.path.join(OUTPUT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
-        f.write(index_html)
+        f.write(index_template.render(index_context))
     print(f"-> Generated {os.path.join(OUTPUT_DIR, 'index.html')}")
     
     print("\nBuild process complete!")

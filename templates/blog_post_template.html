@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-site-prefix="{{ SITE_PREFIX }}">
+<html lang="en" data-site-prefix="{{ SITE_CONFIG.PREFIX }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ SITE_PREFIX }}/assets/css/style.css">
+    <link rel="stylesheet" href="{{ SITE_CONFIG.PREFIX }}/assets/css/style.css">
     <title>{{ post.title }} - Rahul Gothwal</title>
 </head>
 <body>
     <div id="closed-message">keep thinking, keep building</div>
     <div id="canvas-container"><div id="canvas-ui"><h2>draw your thoughts</h2><button id="screenshot-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>Save</span></button></div><canvas id="drawing-canvas"></canvas></div>
-    <div id="dock"><img src="assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+    <div id="dock"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
 
     <div class="window-container">
         <header class="title-bar">
             <div class="window-controls"><div class="control-btn close"></div><div class="control-btn minimize"></div><div class="control-btn maximize"></div></div>
-            <div class="user-info"><img src="assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
+            <div class="user-info"><img src="{{ SITE_CONFIG.PREFIX }}/assets/images/avatar.png" alt="User Avatar"><span>Rahul Gothwal</span></div>
             <div class="current-thought">create freely</div>
         </header>
 
@@ -41,7 +41,7 @@
                         </div>
                     </header>
                     <div class="blog-content">
-                        <img src="{{ SITE_PREFIX }}{{ post.image }}" alt="{{ post.image_alt }}" onerror="this.onerror=null;this.src='https://placehold.co/800x400/2c2c2f/e0e0e0?text=Image+Not+Found';">
+                        <img src="{{ SITE_CONFIG.PREFIX }}{{ post.image }}" alt="{{ post.image_alt }}" onerror="this.onerror=null;this.src='https://placehold.co/800x400/2c2c2f/e0e0e0?text=Image+Not+Found';">
                         {{ post.content | safe }}
                     </div>
                 </article>
@@ -50,7 +50,7 @@
 
         <footer class="footer">
             <div class="footer-left">
-                 <a href="{{ SITE_PREFIX }}/index.html?view=thoughts" id="back-btn">
+                 <a href="{{ SITE_CONFIG.PREFIX }}/index.html?view=thoughts" id="back-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                     <span>Back to Thoughts</span>
                  </a>
@@ -59,13 +59,13 @@
         </footer>
     </div>
     
-    <script src="{{ SITE_PREFIX }}/assets/js/style.js" defer></script>
+    <script src="{{ SITE_CONFIG.PREFIX }}/assets/js/style.js" defer></script>
     <script>
     // This script now ONLY handles the comment functionality specific to this page.
     document.addEventListener('DOMContentLoaded', () => {
-        // --- CONFIGURATION ---
-        const COMMENTS_URL = "https://script.google.com/macros/s/YOUR_APPS_SCRIPT_ID/exec";
-        const FORM_POST_URL = "https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/formResponse";
+        // --- CONFIGURATION (from build.py) ---
+        const COMMENTS_URL = "https://script.google.com/macros/s/{{ SITE_CONFIG.GOOGLE_APPS_SCRIPT_ID }}/exec";
+        const FORM_POST_URL = "https://docs.google.com/forms/d/e/{{ SITE_CONFIG.GOOGLE_FORM_ID }}/formResponse";
 
         const commentsList = document.getElementById("comments-list");
         const commentForm = document.getElementById("comment-form");
