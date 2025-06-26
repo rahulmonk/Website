@@ -19,6 +19,36 @@
                 <span>Save</span>
             </button>
         </div>
+        
+        
+        <div id="drawing-toolbar">
+            <button class="tool-btn active" data-tool="pencil" title="Pencil">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+            </button>
+            <button class="tool-btn" data-tool="line" title="Line">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            </button>
+            <button class="tool-btn" data-tool="rectangle" title="Rectangle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+            </button>
+            <button class="tool-btn" data-tool="circle" title="Circle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle></svg>
+            </button>
+             <button class="tool-btn" data-tool="arrow" title="Arrow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+            <button class="tool-btn" data-tool="text" title="Text">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+            </button>
+             <button class="tool-btn" data-tool="eraser" title="Eraser">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a2.1 2.1 0 0 0-2.97 0L7.88 12.15l-4.95 4.95a2.1 2.1 0 0 0 0 2.97l2.97 2.97a2.1 2.1 0 0 0 2.97 0l11.55-11.55a2.1 2.1 0 0 0 0-2.97zM16 9.01l4.95-4.95"></path><path d="m22 2-4.95 4.95"></path></svg>
+            </button>
+            <div class="tool-separator"></div>
+            <div class="tool-controls">
+                 <input type="range" id="brush-size" min="1" max="100" value="3" title="Brush/Eraser Size">
+            </div>
+        </div>
+        
         <canvas id="drawing-canvas"></canvas>
     </div>
 
@@ -31,7 +61,6 @@
         <span>Rahul Gothwal</span>
     </div>
 
-    
     <div class="window-container">
         <header class="title-bar">
             <div class="window-controls">
@@ -49,7 +78,6 @@
             </div>
         </header>
 
-        
         
 <div class="main-content blog-layout">
     <aside class="comments-sidebar">
@@ -88,7 +116,6 @@
 </div>
 
 
-        
         <footer class="footer">
             
 <div class="footer-left">
@@ -106,9 +133,7 @@
         </footer>
     </div>
     
-    
     <script src="/Website/assets/js/style.js" defer></script>
-    
     
     
 <script>
